@@ -1,0 +1,487 @@
+<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage">
+
+<html>
+<head>
+
+<!--script src="/script/jquery-1.10.2.min.js"></script-->
+
+<!-- https://github.com/joshuaclayton/blueprint-css/wiki/Quick-start-tutorial -->
+
+<link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="/css/buttons.css" type="text/css" media="screen, projection, print"/>
+<link rel="stylesheet" href="/css/numbers.css" type="text/css" media="screen, projection, print"/>
+
+<link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/> 
+
+<!--[if lt IE 8]>
+  <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+<![endif]-->
+
+<style media="screen" type="text/css">
+
+/* Clear Floated Elements
+------------------------------------------------------------------------------*/
+.column:after,
+.button-collection:after,
+.clearfix:after,
+div.project-info:after {
+  clear: both;
+  content: ' ';
+  display: block;
+  font-size: 0;
+  line-height: 0;
+  visibility: hidden;
+  width: 0;
+  height: 0; }
+
+body {
+ font-size: medium;
+}
+
+
+
+<!--textarea { font-family:"Times New Roman", Times, serif; font-size: 150%; }-->
+textarea { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace; font-size: 100%; }
+  
+
+#outer { 
+  width: 900px; 
+  display:inline-block;
+}
+#inner { width: 50px; margin: 0 auto; }
+
+.tabbed {display:none}
+.tabpane {display:none}
+
+</style>
+
+<!-- originally we were using jquery tools for the blue tabs,
+        but now we changes styles...
+
+  <script src="/script/jquery.tools.min.js"></script>
+  
+  <link rel="shortcut icon" href="/media/img/favicon.ico">
+  <link rel="stylesheet" type="text/css"
+        href="/css/standalone.css"/>
+
+  <link rel="stylesheet" href="/css/tabs.css"
+      type="text/css" media="screen" />
+  <link rel="stylesheet" href="/css/tabs-panes.css"
+      type="text/css" media="screen" />
+
+-->
+
+<!-- went to using the style of the jquery-ui-tabs example instead, here:-->
+
+<link rel="stylesheet" href="/css/jquery-ui.css">
+<!--link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"-->
+
+<!--script src="http://code.jquery.com/jquery-1.9.1.js"></script-->
+<script src="/script/jquery-1.9.1.js"></script>
+
+<!--script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script-->
+<script src="/script/jquery-ui.1.10.4.js"></script>
+
+<!--link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css"-->
+<link rel="stylesheet" href="/css/style.css">
+
+<title>WebIperf</title>
+</head>
+
+<body>
+
+
+<div class="container">
+<div class="span-24">
+</div>
+
+<div class="span-18">
+<textarea name="iperf-cmd" class="iperf-output">
+{{.IperfCmd}}
+</textarea>
+</div>
+
+<div class="span-4">
+<form action="../configure-iperf">
+
+<input type="submit" value="generate"  class="a btn bbblue" id="save-btn" href="../gencmd/{{.Title}}" style="height:50px; width=100px; vertical-align:baseline; margin-top:10px"></input>
+</div>
+
+<div class="span-24">
+
+Server <strong> IPv4 address: </strong>
+	<input name="Sv4o1" type="number" min="1" max="255" maxlength="3" placeholder="10" onkeypress="return isNumberKey(event)" class="ipbyte" value="{{.Sv4o1}}"></input><b>.</b>
+	<input name="Sv4o2" type="number" min="0" max="255" maxlength="3" placeholder="0" onkeypress="return isNumberKey(event)" class="ipbyte" value="{{.Sv4o2}}"></input><b>.</b>
+	<input name="Sv4o3" type="number" min="0" max="255" maxlength="3" placeholder="1" onkeypress="return isNumberKey(event)" class="ipbyte" value="{{.Sv4o3}}"></input><b>.</b>
+	<input name="Sv4o4" type="number" min="0" max="255" maxlength="3" placeholder="10" onkeypress="return isNumberKey(event)" class="ipbyte" value="{{.Sv4o4}}"></input>
+
+<br>
+
+Server <strong> IPv6 address: </strong>
+	<input type="text" maxlength="4" class="ip6byte" name="Sv6o1" placeholder="fefe" value="{{.Sv6o1}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Sv6o2" placeholder="0" value="{{.Sv6o2}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Sv6o3" placeholder="0" value="{{.Sv6o3}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Sv6o4" placeholder="0" value="{{.Sv6o4}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Sv6o5" placeholder="10" value="{{.Sv6o5}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Sv6o6" placeholder="0" value="{{.Sv6o6}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Sv6o7" placeholder="1" value="{{.Sv6o7}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Sv6o8" placeholder="10" value="{{.Sv6o8}}"></input> /
+	<input type="number" maxlength="3" class="ip6byte" name="Sv6o9" placeholder="96" value="{{.Sv6o9}}"></input>
+<br>
+Server <strong> Port:</strong> 
+	<input type="number" maxlength="5" class="port" name="Sport" placeholder="5000" value="{{.Sport}}"></input>
+<br>
+<hr>
+Client <strong> IPv4 address: </strong>
+	<input name="Cv4o1" type="number" min="1" max="255" maxlength="3" placeholder="10" onkeypress="return isNumberKey(event)" class="ipbyte" value="{{.Cv4o1}}"></input><b>.</b>
+	<input name="Cv4o2" type="number" min="0" max="255" maxlength="3" placeholder="0" onkeypress="return isNumberKey(event)" class="ipbyte" value="{{.Cv4o2}}"></input><b>.</b>
+	<input name="Cv4o3" type="number" min="0" max="255" maxlength="3" placeholder="1" onkeypress="return isNumberKey(event)" class="ipbyte" value="{{.Cv4o3}}"></input><b>.</b>
+	<input name="Cv4o4" type="number" min="0" max="255" maxlength="3" placeholder="20" onkeypress="return isNumberKey(event)" class="ipbyte" value="{{.Cv4o4}}"></input>
+<br>
+Client <strong> IPv6 address: </strong>
+	<input type="text" maxlength="4" class="ip6byte" name="Cv6o1" placeholder="fefe" value="{{.Cv6o1}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Cv6o2" placeholder="0" value="{{.Cv6o2}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Cv6o3" placeholder="0" value="{{.Cv6o3}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Cv6o4" placeholder="0" value="{{.Cv6o4}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Cv6o5" placeholder="10" value="{{.Cv6o5}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Cv6o6" placeholder="0" value="{{.Cv6o6}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Cv6o7" placeholder="1" value="{{.Cv6o7}}"></input> :
+	<input type="text" maxlength="4" class="ip6byte" name="Cv6o8" placeholder="20" value="{{.Cv6o8}}"></input> /
+	<input type="number" maxlength="3" class="ip6byte" name="Cv6o9" placeholder="96" value="{{.Cv6o9}}"></input>
+<br>
+Client <strong> Port: </strong>
+	<input type="number" maxlength="5" class="port" name="Cport" placeholder="5100" value="{{.Cport}}"></input>
+
+<hr>
+
+<strong>
+<input type="radio" name="trafprot" value="tcp" {{.trafprot_tcp}}>TCP</input>
+<input type="radio" name="trafprot" value="udp" {{.trafprot_udp}}>UDP</input>
+<br>
+
+<input type="radio" name="ipv" value="ipv4" {{.ipv_ipv4}}>IPv4</input>
+<input type="radio" name="ipv" value="ipv6" {{.ipv_ipv6}}>IPv6</input>
+</strong>
+<hr>
+
+
+<!-- the tabs -->
+
+<!-- a hidden field to track which pane should be active on re-render -->
+<!-- set type="number" to debug, type="hidden" for production -->
+<input id="selTab" name="selectedTab" type="hidden"  maxlength="3" value="{{.selectedTab}}"></input>
+
+<div id="tabs" style="display:none;">
+<!--ul class="tabs"-->
+<ul> <!-- class="tabbed"-->
+  <li><a href="#tabs-1">TCP Options</a></li>
+  <li><a href="#tabs-2">UDP Options</a></li>
+  <li><a href="#tabs-3">Client Opt</a></li>
+  <li><a href="#tabs-4">Multicast</a></li>
+  <li><a href="#tabs-5">Reporting</a></li>
+</ul>
+ 
+<!-- tab "panes" -->
+<!-- div class="panes" id="MyPanes" -->
+
+  <!-- div id="tabs-1"  class="tab-section"-->
+  <!--div id="tabs-1" class="tabpane"-->
+  <div id="tabs-1">
+
+<!-- tcp options pane -->
+<strong>Socket buffer size:</strong> 
+	<input type="number" maxlength="5" class="tcpopt" name="sbsize" value="{{.sbsize}}"></input><br>
+<strong>MSS (MTU - 40):</strong> 
+	<input type="number" maxlength="5" class="tcpopt" name="mss" value="{{.mss}}"></input><br>
+<strong>Nodelay?</strong>
+	<input type="checkbox" name="nodelay" value="nodelayon" {{.nodelay}}></input><br>
+<strong>TCP Congestion algorithm (Linux only):</strong> 
+	<select name="congestionalgo">
+		<option {{.congestionalgo_default}} value="none">default</option>
+		<option {{.congestionalgo_reno}} value="reno">reno</option>
+		<option {{.congestionalgo_yeah}} value="yeah">yeah</option>
+		<option {{.congestionalgo_highspeed}} value="highspeed">highspeed</option>
+		<option {{.congestionalgo_bic}} value="bic">bic</option>
+		<option {{.congestionalgo_vegas}} value="vegas">vegas</option>
+	</select>
+<br><br>
+
+
+<!-- end tcp options pane -->
+  </div>
+
+  <!--div id="tabs-2" class="tab-section"-->
+  <!--div id="tabs-2" class="tabpane"-->
+  <div id="tabs-2">
+<!-- udp options pane -->
+<strong>Single-threaded?</strong>
+	<input type="checkbox" name="sglthread" value="sglthreadon" {{.sglthread}}></input><br>
+<strong>Run server as daemon?</strong>
+	<input type="checkbox" name="srvdaemon" value="srvdaemonon" {{.srvdaemon}}></input><br>
+<strong>Bandwidth:</strong> 
+	<input type="number" maxlength="5" class="tcpopt" name="bwidth" placeholder="10000" value="{{.bwidth}}"></input> 
+	<select name="bandwidthUnits">
+		<option {{.bandwidthUnits_Kb}} value="Kb">Kbits</option>
+		<option {{.bandwidthUnits_Mb}} value="Mb">Mbits</option>
+		<option {{.bandwidthUnits_Gb}} value="Gb">Gbits</option>
+	</select>
+<br><br>
+
+<!-- end udp options pane -->
+</div>
+
+  <!--div id="tabs-3" class="tab-section"-->
+  <!--div id="tabs-3" class="tabpane"-->
+  <div id="tabs-3">
+
+<!-- client options pane -->
+
+<strong>Bi-directional traffic?</strong>
+	<input type="checkbox" name="bidir" value="bidiron" {{.bidir}}></input>        
+		<input type="radio" name="bidiropt" value="sim" {{.bidiropt_sim}} > Simultaneously</input>
+		<input type="radio" name="bidiropt" value="seq" {{.bidiropt_seq}} > Sequentially</input>
+	<br>
+<strong>Client listening port:</strong>
+	<input type="number" maxlength="5" class="port" name="CLport" placeholder="5200" value="{{.CLport}}"></input> <br>
+<strong>Total # Bytes to transmit:</strong>
+	<input type="number" maxlength="9" class="tcpopt" name="TotByt" placeholder="999999999" value="{{.TotByt}}"></input> Bytes<br>
+<strong>Total transmit time:</strong>
+	<input type="number" maxlength="5" class="tcpopt" name="TTtime" placeholder="99999" value="{{.TTtime}}"></input> 
+	<select name="TTtimeUnits">
+		<option {{.TTtimeUnits_ttts}} value="ttts">Seconds</option>
+		<option {{.TTtimeUnits_tttm}} value="tttm">Minutes</option>
+		<option {{.TTtimeUnits_ttth}} value="ttth">Hours</option>
+	</select>
+	<br>
+<strong>Number parallel threads:</strong>
+	<input type="number" maxlength="5" class="tcpopt" name="npthreads" placeholder="4" value="{{.npthreads}}"></input> 
+
+<!-- end client options pane -->
+ </div>
+
+  <!--div id="tabs-4"  class="tab-section"-->
+  <!--div id="tabs-4" class="tabpane"-->
+  <div id="tabs-4">
+
+<!-- multicast options pane -->
+
+<strong>TTL:</strong>
+	<input type="number" maxlength="5" class="tcpopt" name="ttl" placeholder="5" value="{{.ttl}}"></input> msecs<br>
+
+
+<!-- end multicast options pane -->
+ </div>
+
+
+  <!--div id="tabs-5"  class="tab-section"-->
+  <!--div id="tabs-5"  class="tabpane"-->
+  <div id="tabs-5">
+<!-- reporting options pane -->
+
+<strong>Format:</strong>
+	<select name="rptformat">
+		<option {{.rptformat_Kb}} value="Kb">Kbits</option>
+		<option {{.rptformat_Mb}} value="Mb">Mbits</option>
+		<option {{.rptformat_KB}} value="KB">Kbytes</option>
+		<option {{.rptformat_MB}} value="MB">Mbytes</option>
+	</select>
+	<br>
+<strong>Interval:</strong>
+	<input type="number" maxlength="5" class="rptopt" name="rptinterval" placeholder="15" value="{{.rptinterval}}"></input>secs <br>
+<strong>Exclude:</strong>
+	<select name="exclusions" multiple>
+		<option {{.exclusions_con}} value="con">Connect</option>
+		<option {{.exclusions_dat}} value="dat">Data</option>
+		<option {{.exclusions_mca}} value="mca">Multicast</option>
+		<option {{.exclusions_set}} value="set">Settings</option>
+		<option {{.exclusions_srv}} value="srv">Server</option>
+	</select><br>
+
+<!-- end reporting options pane -->
+
+ </div>
+
+
+<script>
+var $tabs = 0 // by convention, jquery objects start with $
+
+$(function() {
+    $tabs =    $("#tabs").tabs();
+    $tabs.tabs( "option", "active", {{.selectedTab}});
+    $tabs.on( "tabsactivate", function( event, ui ) {
+       $("#selTab").val(getSelectedTabIndex());
+    } );
+    $tabs.show()
+    $("#manpage").show()
+});
+
+function getSelectedTabIndex() { 
+    return $tabs.tabs('option', 'active');
+}
+
+</script>
+
+
+
+<!--/div-->
+
+
+
+</form>
+
+
+</div>
+
+
+<hr>
+<div class="span-24">
+<div id="manpage" style="display:none;">
+<pre>
+IPERF(1)                            User Manuals                           IPERF(1)
+
+NAME
+       iperf - perform network throughput tests
+
+SYNOPSIS
+       iperf -s [ options ]
+
+       iperf -c server [ options ]
+
+       iperf -u -s [ options ]
+
+       iperf -u -c server [ options ]
+
+DESCRIPTION
+       iperf is a tool for performing network throughput measurements.  It can test
+       either TCP or UDP throughput.  To perform an iperf test the user must estab-
+       lish  both a server (to discard traffic) and a client (to generate traffic).
+
+GENERAL OPTIONS
+       -f, --format
+              [kmKM]   format to report: Kbits, Mbits, KBytes, MBytes
+
+       -h, --help
+              print a help synopsis
+
+       -i, --interval n
+              pause n seconds between periodic bandwidth reports
+
+       -l, --len n[KM]
+              set length read/write buffer to n (default 8 KB)
+
+       -m, --print_mss
+              print TCP maximum segment size (MTU - TCP/IP header)
+
+       -o, --output <filename>
+              output the report or error message to this specified file
+
+       -p, --port n
+              set server port to listen on/connect to to n (default 5001)
+
+       -u, --udp
+              use UDP rather than TCP
+
+       -w, --window n[KM]
+              TCP window size (socket buffer size)
+
+       -B, --bind <host>
+              bind to <host>, an interface or multicast address
+
+       -C, --compatibility
+              for use with older versions does not sent extra msgs
+
+       -M, --mss n
+              set TCP maximum segment size (MTU - 40 bytes)
+
+       -N, --nodelay
+              set TCP no delay, disabling Nagle's Algorithm
+
+       -v, --version
+              print version information and quit
+
+       -V, --IPv6Version
+              Set the domain to IPv6
+
+       -x, --reportexclude
+              [CDMSV]    exclude  C(connection)  D(data)  M(multicast)  S(settings)
+              V(server) reports
+
+       -y, --reportstyle C|c
+              if set to C or c report results as CSV (comma separated values)
+
+SERVER SPECIFIC OPTIONS
+       -s, --server
+              run in server mode
+
+       -U, --single_udp
+              run in single threaded UDP mode
+
+       -D, --daemon
+              run the server as a daemon
+
+CLIENT SPECIFIC OPTIONS
+       -b, --bandwidth n[KM]
+              set  target  bandwidth to n bits/sec (default 1 Mbit/sec).  This set-
+              ting requires UDP (-u).
+
+       -c, --client <host>
+              run in client mode, connecting to <host>
+
+       -d, --dualtest
+              Do a bidirectional test simultaneously
+
+       -n, --num n[KM]
+              number of bytes to transmit (instead of -t)
+
+       -r, --tradeoff
+              Do a bidirectional test individually
+
+       -t, --time n
+              time in seconds to transmit for (default 10 secs)
+
+       -F, --fileinput <name>
+              input the data to be transmitted from a file
+
+       -I, --stdin
+              input the data to be transmitted from stdin
+
+       -L, --listenport n
+              port to recieve bidirectional tests back on
+
+       -P, --parallel n
+              number of parallel client threads to run
+
+       -T, --ttl n
+              time-to-live, for multicast (default 1)
+
+       -Z, --linux-congestion <algo>
+              set TCP congestion control algorithm (Linux only)
+
+ENVIRONMENT
+       TCP_WINDOW_SIZE
+              Controls the size of TCP buffers.
+
+DIAGNOSTICS
+       This section needs to be filled in.
+
+BUGS
+       Exit statuses are inconsistent.   The  threading  implementation  is  rather
+       heinous.
+
+AUTHORS
+       Iperf  was  originally  written by Mark Gates and Alex Warshavsky.  Man page
+       and maintence by Jon Dugan <jdugan at x1024 dot net>.   Other  contributions
+       from  Ajay  Tirumala,  Jim  Ferguson,  Feng Qin, Kevin Gibbs, John Estabrook
+       <jestabro  at  ncsa.uiuc.edu>,  Andrew  Gallatin  <gallatin  at  gmail.com>,
+       Stephen Hemminger <shemminger at linux-foundation.org>
+
+SEE ALSO
+       http://iperf.sourceforge.net/
+
+NLANR/DAST                           APRIL 2008                            IPERF(1)
+
+</pre>
+</div>
+</div>
+
+</body>

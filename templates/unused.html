@@ -1,0 +1,21 @@
+  <div>
+<!-- traffic data options pane -->
+
+<strong>Read traffic data from file:</strong> 
+	<input type="file" name="dataInputFile"></input> <br>
+	<!--input type="text" name="dataInputFilePath" value="{{.dataInputFile}}"></input> <br-->
+
+	<select name="inputFileSelction">
+		<option {{.inputFileSelection_F1}} value="F1">file1</option>
+		<option {{.inputFileSelection_F2}} value="F2">file2</option>
+		<option {{.inputFileSelection_F3}} value="F3">file3</option>
+	</select>
+<hr>
+
+<strong>Outfile:</strong>
+	<input type="file" name="dataOutputFile"></input> <br>
+	<input type="text" name="dataOutputFilePath" value="{{.dataOutputFile}}"></input> <br>
+
+
+<!-- end traffic data options pane -->
+ </div>

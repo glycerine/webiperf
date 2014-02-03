@@ -1,0 +1,15 @@
+
+input[type=number] {
+  width:3em;
+  color:gray;
+}
+
+input[type=text].ip6byte {
+  width:4em;
+  color:orange;
+}
+
+.iperf-output {
+  width:40em;
+  height:3em;
+}

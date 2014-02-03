@@ -1,0 +1,93 @@
+<html>
+<head>
+
+<script src="script/jquery-1.10.2.min.js"></script>
+
+<!-- https://github.com/joshuaclayton/blueprint-css/wiki/Quick-start-tutorial -->
+
+<link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="/css/buttons.css" type="text/css" media="screen, projection, print"/>
+
+<link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/> 
+
+<!--[if lt IE 8]>
+  <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+<![endif]-->
+
+<style media="screen" type="text/css">
+
+/* Clear Floated Elements
+------------------------------------------------------------------------------*/
+.column:after,
+.button-collection:after,
+.clearfix:after,
+div.project-info:after {
+  clear: both;
+  content: ' ';
+  display: block;
+  font-size: 0;
+  line-height: 0;
+  visibility: hidden;
+  width: 0;
+  height: 0; }
+
+body {
+ font-size: medium;
+}
+
+
+
+<!--textarea { font-family:"Times New Roman", Times, serif; font-size: 150%; }-->
+textarea { font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace; font-size: 100%; }
+  
+
+#outer { 
+  width: 900px; 
+  display:inline-block;
+}
+#inner { width: 50px; margin: 0 auto; }
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="span-24">
+<h2>Editing {{.Title}}</h2>
+
+
+<form action="/save/{{.Title}}" method="POST">
+<div>
+<textarea name="body" rows="24" cols="80" class="span-24">{{printf "%s" .Body}}
+</textarea>
+</div>
+
+</div> 
+
+<div class="span-4">
+</div>
+<div class="span-16">
+
+<input type="submit" value="save"  class="a btn bbblue" id="save-btn" href="../save/{{.Title}}" style="height:75px; vertical-align:baseline">
+
+</form>
+
+
+</div>
+<div class="span-4 last">
+<a id="cancel-btn" href="../view/{{.Title}}" class="btn rrred">cancel</a>
+<a id="cancel-btn" href="../view/{{.Title}}" class="btn rrred" target="_blank">new window</a>
+
+</div>
+
+<div class="span-24">
+</div>
+</div>
+
+
+
+
+
+</body>

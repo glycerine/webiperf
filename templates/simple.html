@@ -1,0 +1,108 @@
+<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage">
+<head>
+<meta charset="UTF-8">
+
+<script src="/script/jquery-1.10.2.min.js"></script>
+<!--script src="http://code.jquery.com/jquery-latest.js"></script-->
+
+
+<!-- 
+http://www.findsourcecode.com/css/jquery-how-to-create-simple-tabs-using-jquery-and-css/
+-->
+
+<style type="text/css">
+
+  #tabs{
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  zoom: 1;
+  position:relative;
+  top:2px;
+  z-index: 1;
+}
+
+#tabs li {
+  display: block;
+  list-style: none;
+  margin: 0;
+  margin-right: 1px;
+  padding: 0;
+  float: left;
+}
+
+#tabs li a {
+  display: block;
+  padding: 2px 10px;
+  border: 2px solid #817bfc;
+  border-bottom: 0 none;
+  text-align: center;
+  text-decoration: none;
+}
+
+.tab-section {
+  background:#d4efff;
+  padding: 10px;
+  border: 2px solid #817bfc;
+}
+
+#tabs li a.current {
+  background: #d4efff;
+  color: #000;
+  border-bottom: 2px solid #d4efff;
+}
+
+</style>
+
+<title>simple.html</title>
+</head>
+
+<body>
+
+<hr>
+
+<h1>Simple Tabs</h1>
+<ul id="tabs">
+    <li><a href="#java">Java</a></li>
+    <li><a href="#php">PHP</a></li>
+    <li><a href="#python">Python</a></li>
+    <li><a href="#ruby">Ruby</a></li>
+    <li><a href="#perl">Perl</a></li>
+</ul>
+ 
+<div id="java" class="tab-section">
+    <h2>Here we place title</h2>
+    <p>Here we place java stuff</p>
+</div>
+<div id="php" class="tab-section">
+    <h2>Here we place title</h2>
+    <p>Here we place details php </p>
+</div>
+<div id="python" class="tab-section">
+    <h2>Here we place title</h2>
+    <p>Here we place details python</p>
+</div>
+<div id="ruby" class="tab-section">
+    <h2>Here we place title</h2>
+    <p>Here we place details ruby</p>
+</div>
+<div id="perl" class="tab-section">
+    <h2>Here we place title</h2>
+    <p>Here we place details perl </p>
+</div>
+
+<script>
+$(function(){
+    $('.tab-section').hide();
+    $('#tabs a').bind('click', function(e){
+        $('#tabs a.current').removeClass('current');
+        $('.tab-section:visible').hide();
+        $(this.hash).show();
+        $(this).addClass('current');
+        e.preventDefault();
+    }).filter(':eq(3)').click();
+});
+</script>
+
+
+</body>

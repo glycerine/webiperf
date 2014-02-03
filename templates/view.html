@@ -1,0 +1,40 @@
+<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage">
+<html>
+<head>
+
+<script src="script/jquery-1.10.2.min.js"></script>
+
+<!-- https://github.com/joshuaclayton/blueprint-css/wiki/Quick-start-tutorial -->
+
+<link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="/css/buttons.css" type="text/css" media="screen, projection, print"/>
+<link rel="stylesheet" href="/css/numbers.css" type="text/css" media="screen, projection, print"/>
+
+<link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"/> 
+
+<!--[if lt IE 8]>
+  <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+<![endif]-->
+
+<script>
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    if (charCode != 46 && charCode > 31
+    && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+}
+</script>
+
+
+</head>
+
+<body>
+
+<h1>{{.Title}}</h1>
+
+<div>{{.MdProcessed}}</div>
+
+<p>[<a href="/edit/{{.Title}}">edit</a>]</p>
+
